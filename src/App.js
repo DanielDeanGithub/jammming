@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <SearchBar value={search}  onChange={e => setSearch(e.target.value)}/>
-        <SearchResults />
+        <SearchResults results={[search]}/>
       </header>
     </div>
   );

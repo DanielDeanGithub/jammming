@@ -1,8 +1,13 @@
 import React from 'react'
 
-const SearchResults = () => {
+const SearchResults = ({results}) => {
   return (
-    <div>SearchResults</div>
+    <>
+        <h2>Search Results</h2>
+        <ul>
+            {results.map((e,i) => <li key={i}>{e}</li>)}
+        </ul>
+    </>
   )
 }
 
