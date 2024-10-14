@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-function SearchBar() {
-    const [search, setSearch] = useState("");
-
+const SearchBar = (props) => {
     return (
-        <input id="Search" value={search} onChange={e => setSearch(e.target.value)}/>
+        <input id="Search" value={props.search} onChange={props.onChange}/>
     );
 };
 
