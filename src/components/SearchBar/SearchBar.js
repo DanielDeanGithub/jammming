@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 
 function SearchBar() {
-  return (
-    <div>SearchBar</div>
-  )
-}
+    const [search, setSearch] = useState("");
 
-export default SearchBar
+    return (
+        <input id="Search" />
+    );
+};
+
+export default SearchBar;
