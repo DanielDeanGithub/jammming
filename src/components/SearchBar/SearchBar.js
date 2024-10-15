@@ -2,7 +2,7 @@ import React from 'react';
 
 const SearchBar = ({search, onChange}) => {
     return (
-        <input id="Search" value={search} onChange={onChange}/>
+        <input type="text" id="searchBar" value={search} onChange={onChange}/>
     );
 };
 
