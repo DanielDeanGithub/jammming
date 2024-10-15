@@ -6,13 +6,14 @@ import SearchButton from './components/SubmitButton/SubmitButton.js';
 
 function App() {
   const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   return (
     <div className="App">
       <header className="App-header">
         <SearchBar value={search}  onChange={e => setSearch(e.target.value)}/>
-        <SearchButton />
-        <SearchResults results={[search]}/>
+        <SearchButton onClick={() => setSearchResults([search])}/>
+        <SearchResults results={searchResults}/>
       </header>
     </div>
   );
