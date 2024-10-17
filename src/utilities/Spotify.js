@@ -1,11 +1,9 @@
 import config from './config.js';
-
 const { API_KEY, API_URL } = config;
-
 const clientId = API_KEY;
 const redirectUri = API_URL;
 
-const redirectToAuthCodeFlow = async (clientId) => {
+export const redirectToAuthCodeFlow = async (clientId) => {
     const verifier = generateCodeVerifier(128);
     const challenge = await generateCodeChallenge(verifier);
 
@@ -41,6 +39,26 @@ const generateCodeChallenge = async (codeVerifier) => {
         .replace(/=+$/, '');
 }
 
+export const getAccessToken = async (clientId, code) => {
+    const verifier = localStorage.getItem("verifier");
+
+    const params = new URLSearchParams();
+    params.append("client_id", clientId);
+    params.append("grant_type", "authorization_code");
+    params.append("code", code);
+    params.append("redirect_uri", redirectUri);
+    params.append("code_verifier", verifier);
+
+    const result = await fetch("https://accounts.spotify.com/api/token", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: params
+    });
+
+    const { access_token } = await result.json();
+    return access_token;
+}
+
 const Spotify = async () => {
     const code = undefined;
 
@@ -50,14 +68,6 @@ const Spotify = async () => {
         const accessToken = await getAccessToken(clientId, code);
         const profile = await fetchProfile(accessToken);
         populateUI(profile);
-    }
-
-    
-
-
-
-    async function getAccessToken(clientId, code) {
-    // TODO: Get access token for code
     }
 
     async function fetchProfile(token) {
