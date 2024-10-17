@@ -16,6 +16,7 @@ function App() {
   const searchButtonClickHandler = () => {
     setSearchResults([search]);
     setSearch('');
+    Spotify();
   };
   
   return (
