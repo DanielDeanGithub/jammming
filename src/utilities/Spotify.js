@@ -146,5 +146,20 @@ export const searchSpotify = async (userInput) => {
 
     const fullDetails = await result.json();
     console.log(fullDetails);
-    return fullDetails.artists.items;
+
+    const requiredDetails = [];
+        
+    fullDetails['tracks']['items'].forEach(track => {
+        requiredDetails.push({
+            trackName: track['name'],
+            artists: track['artists'].map(artist => artist['name']).join(', '),
+            albumName: track['album']['name'],
+            albumArtwork: track['album']['images'][0]['url'],
+            preview: track['preview_url']
+        });
+    });
+
+    console.log(requiredDetails);
+    
+    return requiredDetails;
 }
