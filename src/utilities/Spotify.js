@@ -153,6 +153,7 @@ export const searchSpotify = async (userInput) => {
         
     fullDetails['tracks']['items'].forEach(track => {
         requiredDetails.push({
+            trackId: track['id'],
             trackName: track['name'],
             artists: track['artists'].map(artist => artist['name']).join(', '),
             albumName: track['album']['name'],
