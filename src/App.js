@@ -3,13 +3,12 @@ import './App.css';
 import SearchBar from './components/SearchBar/SearchBar.js';
 import SearchResults from './components/SearchResults/SearchResults.js';
 import SearchButton from './components/SubmitButton/SubmitButton.js';
-import { initialiseSpotify, testRefresh, searchTest } from './utilities/Spotify.js';
+import { initialiseSpotify, testRefresh, searchArtist } from './utilities/Spotify.js';
 
 function App() {
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [login, setLogin] = useState(false);
-  
+   
   useEffect(() => {
     //if (search === '') document.getElementById("searchBar").value = search;
   }, [search])
@@ -17,22 +16,14 @@ function App() {
   const searchButtonClickHandler = () => {
     setSearchResults([search]);
     setSearch('');
-    searchTest();
+    searchArtist(search);
   };
-
-  const authoriseApp = () => {
-    initialiseSpotify() ? setLogin(true) : setLogin(false)
-  }
-
-  if (!login) {
-    return (
-      <button onClick={authoriseApp}>Allow App</button>
-    )
-  }
   
   return (
     <div className='App'>
       <header className='App-header'>
+        <button onClick={initialiseSpotify}>Allow App</button>
+        
         <button onClick={testRefresh}>TEST</button>
 
         <SearchBar value={search} onChange={e => setSearch(e.target.value)}/>
