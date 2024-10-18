@@ -145,8 +145,6 @@ export const searchArtist = async (userInput) => {
     });
 
     const fullDetails = await result.json();
-    //console.log(fullDetails);
-    const { artists } = fullDetails;
-    //console.log(artists);
-    return artists;
+    console.log(fullDetails);
+    return fullDetails.artists.items;
 }
