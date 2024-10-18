@@ -3,15 +3,15 @@ import './App.css';
 import SearchBar from './components/SearchBar/SearchBar.js';
 import SearchResults from './components/SearchResults/SearchResults.js';
 import SearchButton from './components/SubmitButton/SubmitButton.js';
-import { initialiseSpotify, testRefresh, searchArtist } from './utilities/Spotify.js'
+import { initialiseSpotify, testRefresh, searchSpotify } from './utilities/Spotify.js'
 import config from './utilities/config.js';
 
 function App() {
-  const [search, setSearch] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState(config.TEST_DATA);
 
   const searchButtonClickHandler = () => {
-    setSearchResults([searchArtist(search)]);
+    setSearchResults([searchSpotify(searchTerm)]);
   };
   
   return (
@@ -21,7 +21,7 @@ function App() {
         
         <button onClick={testRefresh}>TEST</button>
 
-        <SearchBar value={search} onChange={e => setSearch(e.target.value)}/>
+        <SearchBar value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
         <SearchButton onClick={searchButtonClickHandler}/>
         <SearchResults results={searchResults}/>
 

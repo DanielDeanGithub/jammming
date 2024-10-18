@@ -5,7 +5,8 @@ const SearchResults = ({results}) => {
 
   return (
     <>
-        <h2>Search Results</h2>
+      <h2>Search Results</h2>
+        {/* 
         <ul>
             {
               results.map((e,i) => {
@@ -20,7 +21,7 @@ const SearchResults = ({results}) => {
                 )
               })
             }
-        </ul>
+        </ul> */}
     </>
   )
 }

@@ -136,9 +136,9 @@ export const testRefresh = async () => {
     console.log(`New token: ${localStorage.getItem('refresh_token')}`);
 }
 
-export const searchArtist = async (userInput) => {
+export const searchSpotify = async (userInput) => {
     const token = localStorage.getItem('access_token');
-    const url = `https://api.spotify.com/v1/search?q=${userInput}&type=artist&market=GB&limit=10`;
+    const url = `https://api.spotify.com/v1/search?q=${userInput}&type=artist,album,track&market=GB&limit=10`;
     
     const result = await fetch(url, {
         method: "GET", headers: { Authorization: `Bearer ${token}` }
