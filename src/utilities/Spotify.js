@@ -111,7 +111,9 @@ const getRefreshToken = async () => {
      const response = await body.json();
      console.log(response);
  
-     localStorage.setItem('access_token', response.accessToken);
+     if (response.accessToken) {
+         localStorage.setItem('access_token', response.accessToken);
+     }
      if (response.refreshToken) {
        localStorage.setItem('refresh_token', response.refreshToken);
      }
@@ -122,6 +124,7 @@ export const initialiseSpotify = async () => {
         redirectToAuthCodeFlow(clientId);
     } else {
         const accessToken = await getAccessToken(clientId, code);
+
         const profile = await fetchProfile(accessToken);
         populateUI(profile);
     }
@@ -135,14 +138,15 @@ export const testRefresh = async () => {
 
 export const searchArtist = async (userInput) => {
     const token = localStorage.getItem('access_token');
-    const url = `https://api.spotify.com/v1/search?q=${userInput}&type=artist&market=GB&limit=1`;
+    const url = `https://api.spotify.com/v1/search?q=${userInput}&type=artist&market=GB&limit=10`;
     
     const result = await fetch(url, {
         method: "GET", headers: { Authorization: `Bearer ${token}` }
     });
 
-    const details = await result.json();
-
-    console.log(details);
-    return details;
+    const fullDetails = await result.json();
+    //console.log(fullDetails);
+    const { artists } = fullDetails;
+    //console.log(artists);
+    return artists;
 }

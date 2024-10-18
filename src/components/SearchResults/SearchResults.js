@@ -1,6 +1,8 @@
 import React from 'react'
 
 const SearchResults = ({results}) => {
+  console.log(results)
+
   return (
     <>
         <h2>Search Results</h2>

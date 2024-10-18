@@ -8,15 +8,9 @@ import { initialiseSpotify, testRefresh, searchArtist } from './utilities/Spotif
 function App() {
   const [search, setSearch] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-   
-  useEffect(() => {
-    //if (search === '') document.getElementById("searchBar").value = search;
-  }, [search])
 
   const searchButtonClickHandler = () => {
-    setSearchResults([search]);
-    setSearch('');
-    searchArtist(search);
+    setSearchResults([searchArtist(search)]);
   };
   
   return (
