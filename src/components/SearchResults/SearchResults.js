@@ -11,6 +11,7 @@ const SearchResults = ({results}) => {
               <h3>{e['trackName']}</h3>
               <h4>{e['artists']} - {e['albumName']}</h4> 
               <img src={e['albumArtwork']} alt={e['trackName'] + ' Artwork'} />
+              <audio src={e['preview']} controls />
             </div>
           )
         })
