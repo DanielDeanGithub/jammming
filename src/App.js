@@ -3,15 +3,14 @@ import './App.css';
 import SearchBar from './components/SearchBar/SearchBar.js';
 import SearchResults from './components/SearchResults/SearchResults.js';
 import SearchButton from './components/SubmitButton/SubmitButton.js';
-import { initialiseSpotify, testRefresh, searchSpotify } from './utilities/Spotify.js'
-import config from './utilities/config.js';
+import { initialiseSpotify, testRefresh, searchSpotify } from './utilities/Spotify.js';
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState(config.TEST_DATA);
+  const [searchResults, setSearchResults] = useState([]);
 
-  const searchButtonClickHandler = () => {
-    setSearchResults([searchSpotify(searchTerm)]);
+  const searchButtonClickHandler = async () => {
+    setSearchResults(await searchSpotify(searchTerm));
   };
   
   return (

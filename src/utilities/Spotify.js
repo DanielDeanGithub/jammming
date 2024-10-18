@@ -137,6 +137,8 @@ export const testRefresh = async () => {
 }
 
 export const searchSpotify = async (userInput) => {
+    if (!userInput) return [];
+    
     const token = localStorage.getItem('access_token');
     const url = `https://api.spotify.com/v1/search?q=${userInput}&type=artist,album,track&market=GB&limit=10`;
     
@@ -145,7 +147,7 @@ export const searchSpotify = async (userInput) => {
     });
 
     const fullDetails = await result.json();
-    console.log(fullDetails);
+    //console.log(fullDetails);
 
     const requiredDetails = [];
         
