@@ -3,9 +3,6 @@ const { API_KEY, API_URL } = config;
 const clientId = API_KEY;
 const redirectUri = API_URL;
 
-const args = new URLSearchParams(window.location.search);
-const code = args.get('code');
-
 const redirectToAuthCodeFlow = async (clientId) => {
     const verifier = generateCodeVerifier(128);
     const challenge = await generateCodeChallenge(verifier);
@@ -119,16 +116,8 @@ const getRefreshToken = async () => {
      }
 }
 
-export const initialiseSpotify = async () => {
-    if (!code) {
-        redirectToAuthCodeFlow(clientId);
-    } else {
-        const accessToken = await getAccessToken(clientId, code);
-
-        const profile = await fetchProfile(accessToken);
-        populateUI(profile);
-    }
-}
+export const reqUserAuth = () => redirectToAuthCodeFlow(clientId);
+export const parseAuthCode = async (code) => await getAccessToken(clientId, code);
 
 export const testRefresh = async () => {
     console.log(`Current token: ${localStorage.getItem('refresh_token')}`);
