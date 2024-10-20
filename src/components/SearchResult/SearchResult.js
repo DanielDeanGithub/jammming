@@ -1,7 +1,7 @@
 import React, { useState }  from 'react'
 import './SearchResults.css';
 
-const SearchResult = ({details}) => {
+const SearchResult = ({details, updatePlaylist}) => {
     const [audioPlaying, setAudioPlaying] = useState(false);
 
     const onClickHandler = () => {
@@ -15,24 +15,26 @@ const SearchResult = ({details}) => {
         }            
     };
 
-  return (    
-    <div key={details['trackId']} className='result'>
-        <audio id={details['trackId']} src={details['preview']} />
-        
-        <div className='artwork-container'>
-            <img className='artwork' src={details['albumArtwork']} alt={details['trackName'] + ' Artwork'} />
-            <button className="audio-button" onClick={onClickHandler}>{audioPlaying ? 'II' : '▶'}</button>
-        </div>
-        
-        <div className='text'>
-            <h3>{details['trackName']}</h3>
-            <div className='sub-text'>
-                <h4>{details['artists']} - {details['albumName']}</h4>
+    return (    
+        <div key={details['trackId']} className='result'>
+
+            <button onClick={() => updatePlaylist(details['trackId'])}>Add</button>
+            
+            <div className='artwork-container'>
+                <img className='artwork' src={details['albumArtwork']} alt={details['trackName'] + ' Artwork'} />
+                <audio id={details['trackId']} src={details['preview']} />
+                <button className="audio-button" onClick={onClickHandler}>{audioPlaying ? 'II' : '▶'}</button>
             </div>
+            
+            <div className='text'>
+                <h3>{details['trackName']}</h3>
+                <div className='sub-text'>
+                    <h4>{details['artists']} - {details['albumName']}</h4>
+                </div>
+            </div>
+            
         </div>
-        
-    </div>
-  )
+    )
 }
 
 export default SearchResult

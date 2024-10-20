@@ -10,6 +10,7 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [authorisation, setAuthorisation] = useState(null);
   const [accessCode, setAccessCode] = useState('');
+  const [playlist, setPlaylist] = useState([]);
 
   const searchButtonClickHandler = async () => {
     setSearchResults(await searchSpotify(searchTerm));
@@ -26,6 +27,14 @@ function App() {
     getAccessCode().then(code => setAccessCode(code));
   },[authorisation]);
   
+  const updatePlaylistHandler = (id) => {
+    if(playlist.find((e) => e === id)) {
+      return setPlaylist(playlist.filter(e => e !== id));
+    }
+
+    setPlaylist([...playlist, id]);
+  }
+
   return (
     <div className='App'>
       <header className='App-header'>
@@ -36,7 +45,7 @@ function App() {
                 <button onClick={testRefresh}>TEST</button>
                 <SearchBar value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
                 <SearchButton onClick={searchButtonClickHandler}/>
-                <SearchResultsList results={searchResults}/>
+                <SearchResultsList results={searchResults} updatePlaylist={updatePlaylistHandler}/>
               </>    
         }
       </header>
