@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import SearchBar from './components/SearchBar/SearchBar.js';
-import SearchResults from './components/SearchResults/SearchResults.js';
+import SearchResultsList from './components/SearchResultsList/SearchResultsList.js';
 import SearchButton from './components/SubmitButton/SubmitButton.js';
 import { reqUserAuth, parseAuthCode, testRefresh, searchSpotify } from './utilities/Spotify.js';
 
@@ -36,7 +36,7 @@ function App() {
                 <button onClick={testRefresh}>TEST</button>
                 <SearchBar value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
                 <SearchButton onClick={searchButtonClickHandler}/>
-                <SearchResults results={searchResults}/>
+                <SearchResultsList results={searchResults}/>
               </>    
         }
       </header>
