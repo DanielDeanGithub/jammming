@@ -3,6 +3,7 @@ import './App.css';
 import SearchBar from './components/SearchBar/SearchBar.js';
 import SearchResultsList from './components/SearchResultsList/SearchResultsList.js';
 import SearchButton from './components/SubmitButton/SubmitButton.js';
+import Playlist from './components/Playlist/Playlist.js';
 import { reqUserAuth, parseAuthCode, testRefresh, searchSpotify } from './utilities/Spotify.js';
 
 function App() {
@@ -10,7 +11,12 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [authorisation, setAuthorisation] = useState(null);
   const [accessCode, setAccessCode] = useState('');
-  const [playlist, setPlaylist] = useState([]);
+  const [playlist, setPlaylist] = useState([
+    "6nJPHXRpKYv2yqtalEjKy5",
+    "1pr9TZGOXeJUggIal1Wq3R",
+    "6W21LNLz9Sw7sUSNWMSHRu",
+    "1AzMYJm6qTAullM3UKuPY9"
+  ]);
 
   const searchButtonClickHandler = async () => {
     setSearchResults(await searchSpotify(searchTerm));
@@ -46,6 +52,7 @@ function App() {
                 <SearchBar value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
                 <SearchButton onClick={searchButtonClickHandler}/>
                 <SearchResultsList results={searchResults} updatePlaylist={updatePlaylistHandler}/>
+                <Playlist playlist={playlist} updatePlaylist={updatePlaylistHandler}/>
               </>    
         }
       </header>
