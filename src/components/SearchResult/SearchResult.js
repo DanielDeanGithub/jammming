@@ -18,7 +18,7 @@ const SearchResult = ({details, updatePlaylist}) => {
     return (    
         <div key={details['trackId']} className='result'>
 
-            <button onClick={() => updatePlaylist(details['trackId'])}>Add</button>
+            <button onClick={() => updatePlaylist(details)}>Add</button>
             
             <div className='artwork-container'>
                 <img className='artwork' src={details['albumArtwork']} alt={details['trackName'] + ' Artwork'} />

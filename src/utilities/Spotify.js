@@ -155,3 +155,30 @@ export const searchSpotify = async (userInput) => {
     
     return requiredDetails;
 }
+
+export const getTrackDetails = async (trackId) => {
+    if (!trackId) return [];
+    
+    const token = localStorage.getItem('access_token');
+    const url = `https://api.spotify.com/v1/tracks/${trackId}?market=GB`;
+    
+    const result = await fetch(url, {
+        method: "GET", headers: { Authorization: `Bearer ${token}` }
+    });
+
+    const fullDetails = await result.json();
+    //console.log(fullDetails);
+
+    const requiredDetails = {
+        trackId: fullDetails['id'],
+        trackName: fullDetails['name'],
+        artists: fullDetails['artists'].map(artist => artist['name']).join(', '),
+        albumName: fullDetails['album']['name'],
+        albumArtwork: fullDetails['album']['images'][0]['url'],
+        preview: fullDetails['preview_url']
+    };
+
+    //console.log(requiredDetails);
+    
+    return requiredDetails;
+}
