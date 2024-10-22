@@ -1,7 +1,7 @@
 .result {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    margin-bottom: 2px;
 }
 
 .artwork-container {
@@ -54,8 +54,29 @@ h4 {
     filter: drop-shadow(0px 0px 1px black);
 }
 
+.playlist-button {
+    min-width: 50px;
+    font-size: 2rem;
+    border: none;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.red {
+    background-color: red;
+}
+
+.green {
+    background-color: #90EE90;
+}
+
+.results-container {
+    overflow: auto;
+    max-height: 80vh;
+}
+
 @media screen and (min-width: 560px) {
-    .result { 
+    #search-results, #playlist { 
         min-width: 550px;
     }
 
