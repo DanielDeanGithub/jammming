@@ -79,8 +79,10 @@ function App() {
                 <button onClick={testRefresh}>TEST</button>
                 <SearchBar value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
                 <SearchButton onClick={searchButtonClickHandler}/>
-                <SearchResultsList playlist={playlist} results={searchResults} updatePlaylist={updatePlaylistHandler}/>
-                <Playlist playlist={playlist} updatePlaylist={updatePlaylistHandler}/>
+                <div className='flex-container'>
+                  <SearchResultsList playlist={playlist} results={searchResults} updatePlaylist={updatePlaylistHandler}/>
+                  <Playlist playlist={playlist} updatePlaylist={updatePlaylistHandler}/>
+                </div>
               </>    
         }
       </header>
