@@ -7,7 +7,7 @@ const Playlist = ({playlist, updatePlaylist}) => {
       <h2>Playlist</h2>
       {
         playlist.length > 0 && 
-        playlist.map(track => <SearchResult details={track} updatePlaylist={updatePlaylist}/>)
+        playlist.map(track => <SearchResult playlist={playlist} details={track} updatePlaylist={updatePlaylist}/>)
       }
     </div>
   )

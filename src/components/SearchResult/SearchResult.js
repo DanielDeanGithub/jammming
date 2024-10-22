@@ -1,7 +1,7 @@
 import React, { useState }  from 'react'
 import './SearchResults.css';
 
-const SearchResult = ({details, updatePlaylist}) => {
+const SearchResult = ({playlist, details, updatePlaylist}) => {
     const [audioPlaying, setAudioPlaying] = useState(false);
 
     const onClickHandler = () => {
@@ -15,10 +15,12 @@ const SearchResult = ({details, updatePlaylist}) => {
         }            
     };
 
+    const checkPlaylist = () => playlist.find(track => track['trackId'] === details['trackId']);
+
     return (    
         <div key={details['trackId']} className='result'>
 
-            <button onClick={() => updatePlaylist(details)}>Add</button>
+            <button onClick={() => updatePlaylist(details)}>{checkPlaylist() ? '-' : '+' }</button>
             
             <div className='artwork-container'>
                 <img className='artwork' src={details['albumArtwork']} alt={details['trackName'] + ' Artwork'} />
