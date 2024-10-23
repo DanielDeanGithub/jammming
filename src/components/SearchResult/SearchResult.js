@@ -24,8 +24,13 @@ const SearchResult = ({playlist, details, updatePlaylist}) => {
             
             <div className='artwork-container'>
                 <img className='artwork' src={details['albumArtwork']} alt={details['trackName'] + ' Artwork'} />
-                <audio id={details['trackId']} src={details['preview']} />
-                <button className="audio-button" onClick={onClickHandler}>{audioPlaying ? 'II' : '▶'}</button>
+                {
+                    details['preview'] &&
+                    <>
+                        <audio id={details['trackId']} src={details['preview']} />
+                        <button className="audio-button" onClick={onClickHandler}>{audioPlaying ? 'II' : '▶'}</button>
+                    </>
+                }
             </div>
             
             <div className='text'>
