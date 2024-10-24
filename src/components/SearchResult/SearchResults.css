@@ -60,6 +60,8 @@ h4 {
     border: none;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
+    max-height: 100px;
+    height: 100%;
 }
 
 .red {
@@ -72,7 +74,22 @@ h4 {
 
 .results-container {
     overflow: auto;
-    max-height: 80vh;
+}
+
+.results-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.results-container::-webkit-scrollbar-track {
+    background-color: transparent;
+    border: 1.5px solid #7e7e7e;
+    border-radius: 8px;
+}
+
+.results-container::-webkit-scrollbar-thumb {
+    background-color: #f1f1f1;
+    border: 2px solid #616161;
+    border-radius: 8px;
 }
 
 @media screen and (min-width: 560px) {

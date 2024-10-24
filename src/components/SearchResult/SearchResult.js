@@ -20,8 +20,8 @@ const SearchResult = ({playlist, details, updatePlaylist}) => {
     return (    
         <div key={details['trackId']} className='result'>
 
-            <button className={checkPlaylist() ? 'playlist-button red' : 'playlist-button green' } onClick={() => updatePlaylist(details)}>{checkPlaylist() ? '-' : '+' }</button>
             
+            <button className={checkPlaylist() ? 'playlist-button red' : 'playlist-button green' } onClick={() => updatePlaylist(details)}>{checkPlaylist() ? '-' : '+' }</button>
             <div className='artwork-container'>
                 <img className='artwork' src={details['albumArtwork']} alt={details['trackName'] + ' Artwork'} />
                 {
