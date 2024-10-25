@@ -204,9 +204,10 @@ function App() {
           !accessCode 
             ? <button onClick={reqUserAuth}>Login</button>
             : <>
-                <button onClick={testRefresh}>TEST</button>
-                <SearchBar value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
-                <SearchButton onClick={searchButtonClickHandler}/>
+                <div className='flex-container'>
+                  <SearchBar value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
+                  <SearchButton onClick={searchButtonClickHandler}/>
+                </div>
                 <div className='flex-container'>
                   <SearchResultsList playlist={playlist} results={searchResults} updatePlaylist={updatePlaylistHandler}/>
                   <Playlist playlist={playlist} updatePlaylist={updatePlaylistHandler}/>
