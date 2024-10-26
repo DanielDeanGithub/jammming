@@ -3,10 +3,12 @@
     flex-wrap: wrap;
     margin-bottom: 2px;
     align-items: flex-start;
+    max-height: 125px;
+    overflow: hidden;
 }
 
 .artwork-container {
-    max-width: 100px;
+    max-width: 125px;
     display: flex;
     position: relative;
     align-items: center;
@@ -19,7 +21,7 @@
 }
 
 h3 {
-    font-size: 2rem;
+    font-size: 1.35rem;
     padding: 0;
     margin: 0;
     text-align: left;
@@ -27,7 +29,7 @@ h3 {
 }
 
 h4 {
-    font-size: 1.25rem;
+    font-size: 1rem;
     padding: 0;
     margin: 0px;
 }
@@ -61,7 +63,7 @@ h4 {
     border: none;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
-    height: 100px;
+    height: 125px;
 }
 
 .red {
@@ -74,6 +76,7 @@ h4 {
 
 .results-container {
     overflow: auto;
+    max-height: 80vh;
 }
 
 .results-container::-webkit-scrollbar {
