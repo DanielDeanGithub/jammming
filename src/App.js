@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import SearchBar from './components/SearchBar/SearchBar.js';
+import TextInput from './components/TextInput/TextInput.js';
 import SearchResultsList from './components/SearchResultsList/SearchResultsList.js';
-import SearchButton from './components/SubmitButton/SubmitButton.js';
+import TextInputButton from './components/TextInputButton/TextInputButton.js';
 import Playlist from './components/Playlist/Playlist.js';
 import { reqUserAuth, parseAuthCode, testRefresh, searchSpotify } from './utilities/Spotify.js';
 
@@ -204,9 +204,10 @@ function App() {
           !accessCode 
             ? <button onClick={reqUserAuth}>Login</button>
             : <>
+
                 <div className='flex-container'>
-                  <SearchBar value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
-                  <SearchButton onClick={searchButtonClickHandler}/>
+                  <TextInput value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
+                  <TextInputButton onClick={searchButtonClickHandler} buttonText="Search"/>
                 </div>
                 <div className='flex-container'>
                   <SearchResultsList playlist={playlist} results={searchResults} updatePlaylist={updatePlaylistHandler}/>
