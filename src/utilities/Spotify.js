@@ -1,7 +1,5 @@
-import config from './config.js';
-const { API_KEY, API_URL } = config;
-const clientId = API_KEY;
-const redirectUrl = API_URL;
+const clientId = process.env.REACT_APP_API_KEY;
+const redirectUrl = process.env.REACT_APP_API_URL;
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
