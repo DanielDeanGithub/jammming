@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React from 'react';
 import SearchResult from '../SearchResult/SearchResult';
 
 const SearchResultsList = ({playlist, results, updatePlaylist}) => {
@@ -7,7 +7,7 @@ const SearchResultsList = ({playlist, results, updatePlaylist}) => {
       <h2>Search Results</h2>
       <div className='results-container'>
       {
-        results.map((e) => <SearchResult playlist={playlist} details={e} updatePlaylist={updatePlaylist}/>)
+        results.map((e, i) => <SearchResult key={i} playlist={playlist} details={e} updatePlaylist={updatePlaylist}/>)
       }
       </div>
     </div>
