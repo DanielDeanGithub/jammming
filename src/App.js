@@ -13,26 +13,18 @@ function App() {
   const [playlist, setPlaylist] = useState([]);
   const [playlistName, setPlaylistName] = useState('');
 
-  const searchButtonClickHandler = async () => {
-    setSearchResults(await searchSpotify(searchTerm));
-  };
-
+  useEffect(() => setAccessCode(checkLoginStatus()))
+  
+  const searchButtonClickHandler = async () => setSearchResults(await searchSpotify(searchTerm));
+  const savePlaylistButtonClickHandler = async () => await savePlaylist(playlistName, playlist.map(track => track['uri']));
   const searchKeyDownHandler = e => {
     if (e.key === 'Enter') searchButtonClickHandler()
   }
-
-  const savePlaylistButtonClickHandler = async () => {
-    savePlaylist(playlistName, playlist.map(track => track['uri']));
-  };
-
-  useEffect(() => setAccessCode(checkLoginStatus()))
-  
   const updatePlaylistHandler = (details) => {
     if(playlist.find((e) => e.trackId === details.trackId)) {
       return setPlaylist(playlist.filter(e => e.trackId !== details.trackId));
     }
-
-    setPlaylist([...playlist, details]);
+    return setPlaylist([...playlist, details]);
   }
 
   return (
