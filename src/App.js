@@ -13,7 +13,7 @@ function App() {
   const [playlist, setPlaylist] = useState([]);
   const [playlistName, setPlaylistName] = useState('');
 
-  useEffect(() => setAccessCode(checkLoginStatus()))
+  useEffect(() => { setAccessCode(checkLoginStatus()) }, [])
   
   const searchButtonClickHandler = async () => setSearchResults(await searchSpotify(searchTerm));
   const savePlaylistButtonClickHandler = async () => await savePlaylist(playlistName, playlist.map(track => track['uri']));
