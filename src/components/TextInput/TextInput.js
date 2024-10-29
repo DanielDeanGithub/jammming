@@ -1,8 +1,8 @@
 import React from 'react';
 
-const TextInput = ({search, onChange}) => {
+const TextInput = ({search, onChange, onKeyDown}) => {
     return (
-        <input type="text" className="text-input" value={search} onChange={onChange}/>
+        <input type="text" className="text-input" value={search} onChange={onChange} onKeyDown={onKeyDown}/>
     );
 };
 

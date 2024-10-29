@@ -17,6 +17,10 @@ function App() {
     setSearchResults(await searchSpotify(searchTerm));
   };
 
+  const searchKeyDownHandler = e => {
+    if (e.key === 'Enter') searchButtonClickHandler()
+  }
+
   const savePlaylistButtonClickHandler = async () => {
     savePlaylist(playlistName, playlist.map(track => track['uri']));
   };
@@ -40,7 +44,11 @@ function App() {
             : <>
                 <button onClick={logoutClick}>Logout</button>
                 <div className='flex-container'>
-                  <TextInput value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
+                  <TextInput 
+                    value={searchTerm} 
+                    onChange={e =>  setSearchTerm(e.target.value)} 
+                    onKeyDown={searchKeyDownHandler} 
+                    />
                   <TextInputButton onClick={searchButtonClickHandler} buttonText="Search"/>
                 </div>
                 <div className='flex-container'>
