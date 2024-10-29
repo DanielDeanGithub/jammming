@@ -173,10 +173,13 @@ function App() {
       "preview": "https://p.scdn.co/mp3-preview/07275c56a497095ef0a987eae808f43c23ea2d92?cid=4c7acac22bee47d09ae1ad7cf23c1261"
     }
   ]);
+  const [playlistName, setPlaylistName] = useState('');
 
   const searchButtonClickHandler = async () => {
     setSearchResults(await searchSpotify(searchTerm));
   };
+
+
 
   useEffect(() => {
     const args = new URLSearchParams(window.location.search);
@@ -197,6 +200,8 @@ function App() {
     setPlaylist([...playlist, details]);
   }
 
+
+
   return (
     <div className='App'>
       <header className='App-header'>
@@ -208,6 +213,10 @@ function App() {
                 <div className='flex-container'>
                   <TextInput value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
                   <TextInputButton onClick={searchButtonClickHandler} buttonText="Search"/>
+                </div>
+                <div className='flex-container'>
+                  <TextInput value={playlistName} onChange={e => setPlaylistName(e.target.value)}/>
+                  <TextInputButton onClick={searchButtonClickHandler} buttonText="Save Playlist"/>
                 </div>
                 <div className='flex-container'>
                   <SearchResultsList playlist={playlist} results={searchResults} updatePlaylist={updatePlaylistHandler}/>
