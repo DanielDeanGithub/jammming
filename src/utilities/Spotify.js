@@ -143,40 +143,34 @@ export const searchSpotify = async (userInput) => {
     
     const accessToken = currentToken.access_token;
     const url = `https://api.spotify.com/v1/search?q=${userInput}&type=artist,album,track&market=GB&limit=10`;
+    const headers = { Authorization: `Bearer ${accessToken}` };
     
-    const result = await fetch(url, {
-        method: "GET", headers: { Authorization: `Bearer ${accessToken}` }
-    });
-
-    const fullDetails = await result.json();
-    //console.log(fullDetails);
-
     const requiredDetails = [];
-        
-    fullDetails['tracks']['items'].forEach(track => {
-        requiredDetails.push({
-            trackId: track['id'],
-            trackName: track['name'],
-            artists: track['artists'].map(artist => artist['name']).join(', '),
-            albumName: track['album']['name'],
-            albumArtwork: track['album']['images'][0]['url'],
-            preview: track['preview_url'],
-            uri: track['uri']
-        });
-    });
-
-    //console.log(requiredDetails);
+    await fetch(url, {
+            method: "GET", headers: headers
+        })
+        .then(response => response.json())
+        .then(fullDetails => {
+            fullDetails['tracks']['items'].forEach(track => {
+                requiredDetails.push({
+                    trackId: track['id'],
+                    trackName: track['name'],
+                    artists: track['artists'].map(artist => artist['name']).join(', '),
+                    albumName: track['album']['name'],
+                    albumArtwork: track['album']['images'][0]['url'],
+                    preview: track['preview_url'],
+                    uri: track['uri']
+                });
+            });
+        })
+    
     return requiredDetails;
 }
 
 export const savePlaylist = async (name, trackUris) => {
-    console.log(name);
-    console.log(trackUris);
-
     if (!name || !trackUris.length) return;
 
     const accessToken = currentToken.access_token;
-
     const headers = { Authorization: `Bearer ${accessToken}` };
     let userId;
 
