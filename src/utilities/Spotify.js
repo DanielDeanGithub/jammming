@@ -5,7 +5,7 @@ const redirectUrl = API_URL;
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
-const scope = 'user-read-private user-read-email';
+const scope = 'user-read-private user-read-email playlist-modify-public';
 
 // Manages current active token, caching it in localStorage
 const currentToken = {
