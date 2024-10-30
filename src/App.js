@@ -4,36 +4,47 @@ import TextInput from './components/TextInput/TextInput.js';
 import SearchResultsList from './components/SearchResultsList/SearchResultsList.js';
 import TextInputButton from './components/TextInputButton/TextInputButton.js';
 import Playlist from './components/Playlist/Playlist.js';
-import { checkLoginStatus, loginWithSpotify, logoutClick, searchSpotify, savePlaylist } from './utilities/Spotify.js';
+import { checkLoginStatus, loginWithSpotify, logoutClick, searchSpotify, savePlaylist, getUserData } from './utilities/Spotify.js';
 
 function App() {
+  // Search
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [accessCode, setAccessCode] = useState(false);
-  const [playlist, setPlaylist] = useState([]);
-  const [playlistName, setPlaylistName] = useState('');
-
-  useEffect(() => { setAccessCode(checkLoginStatus()) }, [])
-  
   const searchButtonClickHandler = async () => setSearchResults(await searchSpotify(searchTerm));
-  const savePlaylistButtonClickHandler = async () => await savePlaylist(playlistName, playlist.map(track => track['uri']));
   const searchKeyDownHandler = e => {
     if (e.key === 'Enter') searchButtonClickHandler()
-  }
+  };
+
+  // Login
+  const [accessCode, setAccessCode] = useState(false);
+  const [userDetails, setUserDetails] = useState([]);
+  const loginClickHandler = async () => setUserDetails(await loginWithSpotify);
+  useEffect(() => { setAccessCode(checkLoginStatus()) }, [])
+  useEffect(() => { 
+    if (!accessCode) return;
+    const details = async () => setUserDetails(await getUserData());
+    details();
+  }, [accessCode])
+
+  // Playlist
+  const [playlist, setPlaylist] = useState([]);
+  const [playlistName, setPlaylistName] = useState('');  
+  const savePlaylistButtonClickHandler = async () => await savePlaylist(playlistName, playlist.map(track => track['uri']));
   const updatePlaylistHandler = (details) => {
     if(playlist.find((e) => e.trackId === details.trackId)) {
       return setPlaylist(playlist.filter(e => e.trackId !== details.trackId));
     }
     return setPlaylist([...playlist, details]);
   }
-
+  
   return (
     <div className='App'>
       <header className='App-header'>
         { 
           !accessCode 
-            ? <button onClick={loginWithSpotify}>Login</button>
+            ? <button onClick={loginClickHandler}>Login</button>
             : <>
+                <strong>{userDetails['id']}</strong>                
                 <button onClick={logoutClick}>Logout</button>
                 <div className='flex-container'>
                   <TextInput 
