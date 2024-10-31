@@ -4,7 +4,7 @@ import TextInput from './components/TextInput/TextInput.js';
 import SearchResultsList from './components/SearchResultsList/SearchResultsList.js';
 import TextInputButton from './components/TextInputButton/TextInputButton.js';
 import Playlist from './components/Playlist/Playlist.js';
-import { checkLoginStatus, loginWithSpotify, logoutClick, searchSpotify, savePlaylist, getUserData } from './utilities/Spotify.js';
+import { checkLoginStatus, loginWithSpotify, logoutClick, searchSpotify, savePlaylist, getUserData, refreshTokenClick } from './utilities/Spotify.js';
 
 function App() {
   // Search
@@ -44,6 +44,7 @@ function App() {
           !accessCode 
             ? <button onClick={loginClickHandler}>Login</button>
             : <>
+                <button onClick={refreshTokenClick}>Refresh Token</button>
                 <strong>{userDetails['id']}</strong>                
                 <button onClick={logoutClick}>Logout</button>
                 <div className='flex-container'>

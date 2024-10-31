@@ -95,21 +95,21 @@ async function getToken(code) {
     return await response.json();
 }
   
-// async function refreshToken() {
-//     const response = await fetch(tokenEndpoint, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/x-www-form-urlencoded'
-//       },
-//       body: new URLSearchParams({
-//         client_id: clientId,
-//         grant_type: 'refresh_token',
-//         refresh_token: currentToken.refresh_token
-//       }),
-//     });
+async function refreshToken() {
+    const response = await fetch(tokenEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        client_id: clientId,
+        grant_type: 'refresh_token',
+        refresh_token: currentToken.refresh_token
+      }),
+    });
   
-//     return await response.json();
-// }
+    return await response.json();
+}
   
 export async function getUserData() {
     const response = await fetch("https://api.spotify.com/v1/me", {
@@ -130,11 +130,15 @@ export async function logoutClick() {
     window.location.href = redirectUrl;
 }
   
-// async function refreshTokenClick() {
-//     const token = await refreshToken();
-//     currentToken.save(token);
-//     //renderTemplate("oauth", "oauth-template", currentToken);
-// }
+export async function refreshTokenClick() {
+    console.log(currentToken.access_token);
+    
+    const token = await refreshToken();
+    currentToken.save(token);
+    console.log(currentToken.access_token);
+
+    //renderTemplate("oauth", "oauth-template", currentToken);
+}
   
 export const searchSpotify = async (userInput) => {
     if (!userInput) return [];
