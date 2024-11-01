@@ -13,7 +13,12 @@ const currentToken = {
     get expires() { return localStorage.getItem('expires') || null },
 
     save: function (response) {
-        const { access_token, refresh_token, expires_in } = response;
+        console.log(response)
+
+        //const { access_token, refresh_token, expires_in } = response;
+        const { access_token, refresh_token } = response;
+        const expires_in = 100;
+
         localStorage.setItem('access_token', access_token);
         localStorage.setItem('refresh_token', refresh_token);
         localStorage.setItem('expires_in', expires_in);
@@ -40,6 +45,10 @@ if (code) {
     const updatedUrl = url.search ? url.href : url.href.replace('?', '');
     window.history.replaceState({}, document.title, updatedUrl);
 }
+
+setTimeout(() => {
+    refreshToken()
+}, currentToken.expires_in);
 
 export const checkLoginStatus = () => currentToken.access_token !== null;
 
@@ -96,7 +105,7 @@ async function getToken(code) {
 }
   
 async function refreshToken() {
-    const response = await fetch(tokenEndpoint, {
+    return await fetch(tokenEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -106,9 +115,9 @@ async function refreshToken() {
         grant_type: 'refresh_token',
         refresh_token: currentToken.refresh_token
       }),
-    });
-  
-    return await response.json();
+    })
+    .then(response => response.json())
+    .then(jsonResponse => currentToken.save(jsonResponse));
 }
   
 export async function getUserData() {
@@ -131,11 +140,11 @@ export async function logoutClick() {
 }
   
 export async function refreshTokenClick() {
-    console.log(currentToken.access_token);
+    console.log(currentToken);
     
-    const token = await refreshToken();
-    currentToken.save(token);
-    console.log(currentToken.access_token);
+    await refreshToken();
+    //currentToken.save(token);
+    console.log(currentToken);
 
     //renderTemplate("oauth", "oauth-template", currentToken);
 }
