@@ -13,19 +13,21 @@ const currentToken = {
     get expires() { return localStorage.getItem('expires') || null },
 
     save: function (response) {
-        console.log(response)
-
-        //const { access_token, refresh_token, expires_in } = response;
-        const { access_token, refresh_token } = response;
-        const expires_in = 100;
+        const { access_token, refresh_token, expires_in } = response;
 
         localStorage.setItem('access_token', access_token);
         localStorage.setItem('refresh_token', refresh_token);
-        localStorage.setItem('expires_in', expires_in);
+
+        localStorage.setItem('expires_in', setTimeout(() => {
+            refreshToken()
+        }, expires_in * 1000)); // Multiple by 1000 to convert seconds to milliseconds as Spotify API retuns value in seconds 
 
         const now = new Date();
         const expiry = new Date(now.getTime() + (expires_in * 1000));
         localStorage.setItem('expires', expiry);
+
+
+        console.log(currentToken);
     }
 };
 
@@ -46,9 +48,7 @@ if (code) {
     window.history.replaceState({}, document.title, updatedUrl);
 }
 
-setTimeout(() => {
-    refreshToken()
-}, currentToken.expires_in);
+
 
 export const checkLoginStatus = () => currentToken.access_token !== null;
 
@@ -138,17 +138,7 @@ export async function logoutClick() {
     localStorage.clear();
     window.location.href = redirectUrl;
 }
-  
-export async function refreshTokenClick() {
-    console.log(currentToken);
-    
-    await refreshToken();
-    //currentToken.save(token);
-    console.log(currentToken);
-
-    //renderTemplate("oauth", "oauth-template", currentToken);
-}
-  
+   
 export const searchSpotify = async (userInput) => {
     if (!userInput) return [];
     
