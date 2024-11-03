@@ -25,35 +25,12 @@ const currentToken = {
         const now = new Date();
         const expiry = new Date(now.getTime() + (expires_in * 1000));
         localStorage.setItem('expires', expiry);
-
-
-        console.log(currentToken);
     }
 };
 
-// On page load, try fetching auth code from current browser search URL
-const args = new URLSearchParams(window.location.search);
-const code = args.get('code');
+export const checkLoginStatus = () => currentToken.access_token !== null && currentToken.access_token !== 'undefined';
 
-// If code found do a token exchange
-if (code) {
-    const token = await getToken(code);
-    currentToken.save(token);
-
-    // Remove code from URL so we can refresh correctly.
-    const url = new URL(window.location.href);
-    url.searchParams.delete("code");
-
-    const updatedUrl = url.search ? url.href : url.href.replace('?', '');
-    window.history.replaceState({}, document.title, updatedUrl);
-}
-
-
-
-export const checkLoginStatus = () => currentToken.access_token !== null;
-
-
-async function redirectToSpotifyAuthorize() {
+const redirectToSpotifyAuthorize = async () => {
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const randomValues = crypto.getRandomValues(new Uint8Array(64));
     const randomString = randomValues.reduce((acc, x) => acc + possible[x % possible.length], "");
@@ -81,10 +58,10 @@ async function redirectToSpotifyAuthorize() {
 
     authUrl.search = new URLSearchParams(params).toString();
     window.location.href = authUrl.toString(); // Redirect the user to the authorization server for login
-}
+};
 
 // Soptify API Calls
-async function getToken(code) {
+const getToken = async (code) => {
     const code_verifier = localStorage.getItem('code_verifier');
   
     const response = await fetch(tokenEndpoint, {
@@ -102,9 +79,9 @@ async function getToken(code) {
     });
   
     return await response.json();
-}
+};
   
-async function refreshToken() {
+const refreshToken = async () => {
     return await fetch(tokenEndpoint, {
       method: 'POST',
       headers: {
@@ -118,26 +95,24 @@ async function refreshToken() {
     })
     .then(response => response.json())
     .then(jsonResponse => currentToken.save(jsonResponse));
-}
+};
   
-export async function getUserData() {
+export const getUserData = async () => {
     const response = await fetch("https://api.spotify.com/v1/me", {
       method: 'GET',
       headers: { 'Authorization': 'Bearer ' + currentToken.access_token },
     });
   
     return await response.json();
-}
+};
   
 // Click handlers
-export async function loginWithSpotify() {
-    await redirectToSpotifyAuthorize();
-}
+export const loginWithSpotify = async () => await redirectToSpotifyAuthorize();
   
-export async function logoutClick() {
+export const logoutClick = async () =>  {
     localStorage.clear();
     window.location.href = redirectUrl;
-}
+};
    
 export const searchSpotify = async (userInput) => {
     if (!userInput) return [];
@@ -166,7 +141,7 @@ export const searchSpotify = async (userInput) => {
         })
     
     return requiredDetails;
-}
+};
 
 export const savePlaylist = async (name, trackUris) => {
     if (!name || !trackUris.length) return;
@@ -194,4 +169,21 @@ export const savePlaylist = async (name, trackUris) => {
             });
         });
     });
-}
+};
+
+// On page load, try fetching auth code from current browser search URL
+const args = new URLSearchParams(window.location.search);
+const code = args.get('code');
+
+// If code found do a token exchange
+if (code) {
+    const token = await getToken(code);
+    currentToken.save(token);
+
+    // Remove code from URL so we can refresh correctly.
+    const url = new URL(window.location.href);
+    url.searchParams.delete("code");
+
+    const updatedUrl = url.search ? url.href : url.href.replace('?', '');
+    window.history.replaceState({}, document.title, updatedUrl);
+};
