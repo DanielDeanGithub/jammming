@@ -21,6 +21,7 @@ function App() {
   const loginClickHandler = async () => setUserDetails(await loginWithSpotify);
   useEffect(() => { setAccessCode(checkLoginStatus()) }, [])
   useEffect(() => { 
+    console.log(accessCode)
     if (!accessCode) return;
     const details = async () => setUserDetails(await getUserData());
     details();

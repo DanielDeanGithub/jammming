@@ -24,11 +24,15 @@ const currentToken = {
 
         const now = new Date();
         const expiry = new Date(now.getTime() + (expires_in * 1000));
+
         localStorage.setItem('expires', expiry);
     }
 };
 
-export const checkLoginStatus = () => currentToken.access_token !== null && currentToken.access_token !== 'undefined';
+export const checkLoginStatus = () => {
+    console.log(currentToken);
+    return currentToken.access_token !== null && currentToken.access_token !== 'undefined';
+}
 
 const redirectToSpotifyAuthorize = async () => {
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
