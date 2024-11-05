@@ -30,8 +30,11 @@ const currentToken = {
 };
 
 export const checkLoginStatus = () => {
-    console.log(currentToken);
-    return currentToken.access_token !== null && currentToken.access_token !== 'undefined';
+    const expiryDate = new Date(currentToken.expires).getTime();
+    const currentDate = new Date().getTime();
+    return expiryDate >= currentDate;
+    
+    //return currentToken.access_token !== null && currentToken.access_token !== 'undefined';
 }
 
 const redirectToSpotifyAuthorize = async () => {
