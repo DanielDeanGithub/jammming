@@ -21,15 +21,11 @@ function App() {
   const loginClickHandler = async () => setUserDetails(await loginWithSpotify);
   useEffect(() => { 
     setLoggedIn(checkLoginStatus()) 
-    // console.log(loggedIn)
-    // console.log(localStorage.getItem('access_token'))
-    // console.log(localStorage.getItem('expires'))
   }, [loggedIn])
   useEffect(() => {    
     if (!loggedIn) return;
-    if (loggedIn && new Date(localStorage.getItem('expires')).getTime() <= new Date().getTime()) {
-      refreshToken();
-      setTokenRefresh(localStorage.getItem('expires'));
+    if (new Date(localStorage.getItem('expires')).getTime() <= new Date().getTime()) {
+      refAndSetToken();
     }
     const getDetails = async () => setUserDetails(await getUserData());
     getDetails();
@@ -38,11 +34,12 @@ function App() {
 
   // Token
   const [tokenRefresh, setTokenRefresh] = useState(null);
+  const refAndSetToken = () => {      
+    refreshToken();
+    setTokenRefresh(localStorage.getItem('expires'));
+  }
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      refreshToken();
-      setTokenRefresh(localStorage.getItem('expires'));
-    }, localStorage.getItem('refresh_in'));
+    const timeout = setTimeout(() => refAndSetToken, localStorage.getItem('refresh_in'));
     return () => clearTimeout(timeout);
   }, [tokenRefresh]);
 
