@@ -4,7 +4,7 @@ import TextInput from './components/TextInput/TextInput.js';
 import SearchResultsList from './components/SearchResultsList/SearchResultsList.js';
 import TextInputButton from './components/TextInputButton/TextInputButton.js';
 import Playlist from './components/Playlist/Playlist.js';
-import { checkLoginStatus, loginWithSpotify, logoutClick, searchSpotify, savePlaylist, getUserData } from './utilities/Spotify.js';
+import { checkLoginStatus, loginWithSpotify, logoutClick, searchSpotify, savePlaylist, getUserData, refreshToken } from './utilities/Spotify.js';
 
 function App() {
   // Search
@@ -16,16 +16,35 @@ function App() {
   };
 
   // Login
-  const [accessCode, setAccessCode] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [userDetails, setUserDetails] = useState([]);
   const loginClickHandler = async () => setUserDetails(await loginWithSpotify);
-  useEffect(() => { setAccessCode(checkLoginStatus()) }, [])
   useEffect(() => { 
-    console.log(accessCode)
-    if (!accessCode) return;
-    const details = async () => setUserDetails(await getUserData());
-    details();
-  }, [accessCode])
+    setLoggedIn(checkLoginStatus()) 
+    // console.log(loggedIn)
+    // console.log(localStorage.getItem('access_token'))
+    // console.log(localStorage.getItem('expires'))
+  }, [loggedIn])
+  useEffect(() => {    
+    if (!loggedIn) return;
+    if (loggedIn && new Date(localStorage.getItem('expires')).getTime() <= new Date().getTime()) {
+      refreshToken();
+      setTokenRefresh(localStorage.getItem('expires'));
+    }
+    const getDetails = async () => setUserDetails(await getUserData());
+    getDetails();
+  }, [loggedIn]);
+
+
+  // Token
+  const [tokenRefresh, setTokenRefresh] = useState(null);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      refreshToken();
+      setTokenRefresh(localStorage.getItem('expires'));
+    }, localStorage.getItem('refresh_in'));
+    return () => clearTimeout(timeout);
+  }, [tokenRefresh]);
 
   // Playlist
   const [playlist, setPlaylist] = useState([]);
@@ -42,7 +61,7 @@ function App() {
     <div className='App'>
       <header className='App-header'>
         { 
-          !accessCode 
+          !loggedIn 
             ? <button onClick={loginClickHandler}>Login</button>
             : <>
                 <strong>{userDetails['id']}</strong>                

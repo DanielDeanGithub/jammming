@@ -6,36 +6,26 @@ const tokenEndpoint = "https://accounts.spotify.com/api/token";
 const scope = 'user-read-private user-read-email playlist-modify-public';
 
 // Manages current active token, caching it in localStorage
-const currentToken = {
+export const currentToken = {
     get access_token() { return localStorage.getItem('access_token') || null; },
     get refresh_token() { return localStorage.getItem('refresh_token') || null; },
-    get expires_in() { return localStorage.getItem('refresh_in') || null },
+    get refresh_in() { return localStorage.getItem('refresh_in') || null },
     get expires() { return localStorage.getItem('expires') || null },
-
+  
     save: function (response) {
-        const { access_token, refresh_token, expires_in } = response;
-
-        localStorage.setItem('access_token', access_token);
-        localStorage.setItem('refresh_token', refresh_token);
-
-        localStorage.setItem('expires_in', setTimeout(() => {
-            refreshToken()
-        }, expires_in * 1000)); // Multiple by 1000 to convert seconds to milliseconds as Spotify API retuns value in seconds 
-
-        const now = new Date();
-        const expiry = new Date(now.getTime() + (expires_in * 1000));
-
-        localStorage.setItem('expires', expiry);
+      const { access_token, refresh_token, expires_in } = response;
+      localStorage.setItem('access_token', access_token);
+      localStorage.setItem('refresh_token', refresh_token);
+      localStorage.setItem('refresh_in', ((expires_in - 300) * 1000));
+  
+      const now = new Date();
+      const expiry = new Date(now.getTime() + (expires_in * 1000));
+      localStorage.setItem('expires', expiry);
     }
-};
+  };
+  
 
-export const checkLoginStatus = () => {
-    const expiryDate = new Date(currentToken.expires).getTime();
-    const currentDate = new Date().getTime();
-    return expiryDate >= currentDate;
-    
-    //return currentToken.access_token !== null && currentToken.access_token !== 'undefined';
-}
+export const checkLoginStatus = () => currentToken.access_token !== null && currentToken.access_token !== 'undefined';
 
 const redirectToSpotifyAuthorize = async () => {
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -88,7 +78,9 @@ const getToken = async (code) => {
     return await response.json();
 };
   
-const refreshToken = async () => {
+export const refreshToken = async () => {
+    console.log('refresh')
+
     return await fetch(tokenEndpoint, {
       method: 'POST',
       headers: {
