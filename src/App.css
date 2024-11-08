@@ -46,3 +46,12 @@
     flex-direction: row;
   }
 }
+
+h1 {
+  font-size: 4rem;
+}
+
+span {
+  color: #61dafb;
+}
+

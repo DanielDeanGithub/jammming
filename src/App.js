@@ -57,6 +57,7 @@ function App() {
   return (
     <div className='App'>
       <header className='App-header'>
+        <h1>Ja<span>mmm</span>ing</h1>
         { 
           !loggedIn 
             ? <button onClick={loginClickHandler}>Login</button>
