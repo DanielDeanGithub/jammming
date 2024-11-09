@@ -34,8 +34,8 @@ function App() {
 
   // Token
   const [tokenRefresh, setTokenRefresh] = useState(null);
-  const refAndSetToken = () => {      
-    refreshToken();
+  const refAndSetToken = async () => {      
+    await refreshToken();
     setTokenRefresh(localStorage.getItem('expires'));
   }
   useEffect(() => {
