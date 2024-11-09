@@ -24,10 +24,12 @@ function App() {
   }, [loggedIn])
   useEffect(() => {    
     if (!loggedIn) return;
-    if (new Date(localStorage.getItem('expires')).getTime() <= new Date().getTime()) {
-      refAndSetToken();
+    const getDetails = async () => {
+      if (new Date(localStorage.getItem('expires')).getTime() <= new Date().getTime()) {
+        await refAndSetToken();
+      }
+      setUserDetails(await getUserData());
     }
-    const getDetails = async () => setUserDetails(await getUserData());
     getDetails();
   }, [loggedIn]);
 
