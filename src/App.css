@@ -55,3 +55,6 @@ span {
   color: #61dafb;
 }
 
+#username {
+  text-transform: capitalize;
+}

@@ -17,7 +17,7 @@ function App() {
 
   // Login
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userDetails, setUserDetails] = useState([]);
+  const [userDetails, setUserDetails] = useState({id:'Loading deatails...'});
   const loginClickHandler = async () => setUserDetails(await loginWithSpotify);
   useEffect(() => { 
     setLoggedIn(checkLoginStatus()) 
@@ -64,7 +64,7 @@ function App() {
           !loggedIn 
             ? <button onClick={loginClickHandler}>Login</button>
             : <>
-                <strong>{userDetails['id']}</strong>                
+                <strong id="username">{userDetails['id']}</strong>                
                 <button onClick={logoutClick}>Logout</button>
                 <div className='flex-container'>
                   <TextInput 
