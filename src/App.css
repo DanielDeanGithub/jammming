@@ -1,4 +1,4 @@
-.App {
+.app {
   text-align: center;
 }
 
@@ -13,14 +13,21 @@
   }
 }
 
-.App-header {
+.app-header {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.app-body {
+  min-height: 100vh;
+  background-color: #282c344b;
+  display: flex;
+  flex-direction: column;
+  
 }
 
 .App-link {
@@ -42,8 +49,9 @@
 }
 
 @media screen and (min-width: 1100px) {
-  .flex-container {
+  .app-body {
     flex-direction: row;
+    justify-content: space-evenly;
   }
 }
 

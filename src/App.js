@@ -57,34 +57,40 @@ function App() {
   }
   
   return (
-    <div className='App'>
-      <header className='App-header'>
+    <div className='app'>
+      <header className='app-header'>
         <h1>Ja<span>mmm</span>ing</h1>
         { 
           !loggedIn 
             ? <button onClick={loginClickHandler}>Login</button>
             : <>
-                <strong id="username">{userDetails['id']}</strong>                
-                <button onClick={logoutClick}>Logout</button>
-                <div className='flex-container'>
-                  <TextInput 
-                    value={searchTerm} 
-                    onChange={e =>  setSearchTerm(e.target.value)} 
-                    onKeyDown={searchKeyDownHandler} 
-                    />
-                  <TextInputButton onClick={searchButtonClickHandler} buttonText="Search"/>
+                <div>
+                    <strong id="username">{userDetails['id']}</strong>                
+                    <button onClick={logoutClick}>Logout</button>
                 </div>
-                <div className='flex-container'>
-                  <TextInput value={playlistName} onChange={e => setPlaylistName(e.target.value)}/>
-                  <TextInputButton onClick={savePlaylistButtonClickHandler} buttonText="Save Playlist"/>
-                </div>
-                <div className='flex-container'>
-                  <SearchResultsList playlist={playlist} results={searchResults} updatePlaylist={updatePlaylistHandler}/>
-                  <Playlist playlist={playlist} updatePlaylist={updatePlaylistHandler}/>
-                </div>
+                
               </>    
         }
       </header>
+      {
+        loggedIn &&
+        <main className='app-body'>
+          <div className='flex-container'>
+            <TextInput 
+              value={searchTerm} 
+              onChange={e =>  setSearchTerm(e.target.value)} 
+              onKeyDown={searchKeyDownHandler} 
+              />
+            <TextInputButton onClick={searchButtonClickHandler} buttonText="Search"/>
+            <SearchResultsList playlist={playlist} results={searchResults} updatePlaylist={updatePlaylistHandler}/>
+          </div>
+          <div className='flex-container'>
+            <TextInput value={playlistName} onChange={e => setPlaylistName(e.target.value)}/>
+            <TextInputButton onClick={savePlaylistButtonClickHandler} buttonText="Save Playlist"/>
+            <Playlist playlist={playlist} updatePlaylist={updatePlaylistHandler}/>
+          </div>
+        </main>    
+      }
     </div>
   );
 }
