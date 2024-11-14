@@ -84,7 +84,6 @@ function App() {
             <TextInputButton onClick={searchButtonClickHandler} buttonText="Search"/>
             <SearchResultsList playlist={playlist} results={searchResults} updatePlaylist={updatePlaylistHandler}/>
           </div>
-          
           <div className='flex-container'>
             <TextInput value={playlistName} onChange={e => setPlaylistName(e.target.value)}/>
             <TextInputButton onClick={savePlaylistButtonClickHandler} buttonText="Save Playlist"/>
