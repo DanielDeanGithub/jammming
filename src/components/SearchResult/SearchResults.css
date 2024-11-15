@@ -76,8 +76,9 @@ h4 {
 
 .results-container {
     overflow: auto;
-    max-height: 80vh;
+    max-height: 30vh;
 }
+
 
 .results-container::-webkit-scrollbar {
     width: 12px;
@@ -103,4 +104,13 @@ h4 {
     .text { 
         max-width: 400px;
     }
+
+
 }
+
+
+@media screen and (min-width: 1100px) {
+    .results-container {
+        max-height: 70vh;
+    }
+  }
